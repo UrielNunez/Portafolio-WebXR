@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at center, #193c4b, #193c4b, #003b55, black);
+
+      height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Carrusel */
+.slider {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  transform-style: preserve-3d;
+  animation: rotate 30s linear infinite;
+  cursor: pointer;
+}
+
+@keyframes rotate {
+  0% {
+    transform: perspective(1000px) rotateX(-15deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: perspective(1000px) rotateX(-15deg) rotateY(360deg);
+  }
+}
+
+/* Posiciona cada carta en su ángulo */
+.slider span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--i) * 120deg)) translateZ(150px); /* Ajusta Z según separación */
+}
+.slider span:hover .card {
+    transform: translateY(-50px) scale(1.2);
+}
+.slider:hover {
+  animation-play-state: paused;
+}
+
+/* Tarjeta */
+.card {
+  width: 350px;
+  height: 400px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+}
+
+.content {
+  background: black;
+  border-radius: 45px;
+  box-shadow: 2px 2px 19px;
+  width: 350px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 377px;
+  height: 427px;
+  margin: auto;
+  background: linear-gradient(135deg, rgba(4, 0, 255, 1), rgba(136, 0, 255, 1), rgba(209, 0, 255, 1));
+  border-radius: 45px;
+}
+
+.card::after {
+  filter: blur(20px);
+  transition: 2s;
+}
+
+.card:hover::after {
+  animation: cardafter 2.5s infinite forwards;
+}
+
+@keyframes cardafter {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Texto */
+.heading {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 40px 0 35px 0;
+  text-align: center;
+  width: 100%;
+  color: white;
+}
+
+.subtext {
+  font-size: 20px;
+  margin: 30px 0 40px 0;
+  text-align: center;
+  width: 100%;
+  color: white;
+}
+
+.powered {
+  font-size: 14px;
+  color: #aaa;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Botón */
+#launch-btn {
+  padding: 15px 35px;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(4, 0, 255, 1), rgba(209, 0, 255, 1));
+  box-shadow: 0 0 15px rgba(209, 0, 255, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+  align-self: center;
+}
+
+#launch-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(209, 0, 255, 0.8);
+}
