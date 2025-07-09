@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //BOTTON AR PERSONALIZADO 
         const arButton = document.getElementById("ar-button");
+
+        const avisoStart = document.getElementById("webar-notice");
+        const avisoIOS = document.getElementById("button");
+        const arButton2 = document.getElementById("ar-button2");
+
+        if (arButton2) arButton2.style.display = "none";
         {
             const supported = navigator.xr && navigator.xr.isSessionSupported("immersive-ar");
             if (!supported) {
@@ -42,12 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 position.setFromMatrixPosition(controller.matrixWorld)
                 //mesh.position.applyMatrix4(controller.matrixWorld); //PARA PONER EL OBJETO JUSTA EN LA POSICION VIRTUALD EL TELEFONO 
                 //se calcula la direccion para que el objeto este un poco mas adelante del telfono
-                const direction = new THREE.Vector3(0,0,-1);
+                const direction = new THREE.Vector3(0, 0, -1);
                 direction.applyQuaternion(controller.quaternion);
                 //se mueve el cubo 0.3 metros hacia adelante para que no aparezca tan cerca de la posicion del telfono 
                 position.add(direction.multiplyScalar(0.3));
                 mesh.position.copy(position);
-                
+
                 mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
                 scene.add(mesh);
             });
@@ -60,11 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const start = async () => {
                 currentSession = await navigator.xr.requestSession("immersive-ar", { optionalFeatures: ['dom-overlay'], domOverlay: { root: document.body } });
 
+                if (avisoStart) avisoStart.style.display = "none";
+                if (avisoIOS) avisoIOS.style.display = "none";
+
+                if (arButton2) arButton2.style.display = "block";
+
                 renderer.xr.enabled = true;
                 renderer.xr.setReferenceSpaceType('local');
                 await renderer.xr.setSession(currentSession);
 
-                arButton.textContent = "End";
+                arButton2.textContent = "End";
 
                 renderer.setAnimationLoop(() => {
                     renderer.render(scene, camera);
@@ -75,9 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderer.clear();
                 renderer.setAnimationLoop(null);
 
-                arButton.style.display = "none";
+                arButton2.style.display = "none";
+                window.location.href = "../index.html"
             }
             arButton.addEventListener("click", () => {
+                if (currentSession) {
+                    end();
+                } else {
+                    start();
+                }
+            });
+            arButton2.addEventListener("click", () => {
                 if (currentSession) {
                     end();
                 } else {
