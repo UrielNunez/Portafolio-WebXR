@@ -28,11 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Modelo 3D creado
         {
-
+            //3d mdoel
             const gltf = await loadGLTF("../Assets/Modelo.glb");
             gltf.scene.scale.set(1, 1, 1);
             gltf.scene.position.set(0, -1, 0);
             scene.add(gltf.scene);
+            //animation
+            const mixer = new THREE.AnimationMixer(gltf.scene);
+            if (gltf.animations && gltf.animations.length > 0) {
+                const action = mixer.clipAction(gltf.animations[0]);
+                action.play();
+            }
 
         }
 
