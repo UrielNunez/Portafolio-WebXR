@@ -1,12 +1,11 @@
 import * as THREE from 'three';
-
+import { loadGLTF } from '../Assets/loader.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     const initialize = async () => {
 
         //BOTTON AR PERSONALIZADO 
         const arButton = document.getElementById("ar-button");
-
         const avisoStart = document.getElementById("webar-notice");
         const avisoIOS = document.getElementById("button");
         const arButton2 = document.getElementById("ar-button2");

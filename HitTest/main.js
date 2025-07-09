@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import { loadGLTF } from '../Assets/loader.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     const initialize = async () => {
