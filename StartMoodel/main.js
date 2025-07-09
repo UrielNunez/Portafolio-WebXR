@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import { loadGLTF } from '../Assets/loader.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     const initialize = async () => {
@@ -28,14 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Modelo 3D creado
         {
-            
-            const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffbff });
-            const mesh = new THREE.Mesh(geometry, material);
 
-            mesh.position.set(0, 0, -0.3);
-            scene.add(mesh);
-            
+            const gltf = await loadGLTF("./Assets/Modelo.glb");
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(0, -1, 0);
+            scene.add(gltf.scene);
+
         }
 
 
