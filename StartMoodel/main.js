@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const arButton = document.getElementById("ar-button");
         const avisoStart = document.getElementById("webar-notice");
         const avisoIOS = document.getElementById("button");
-         const arButton2 = document.getElementById("ar-button");
+         const arButton2 = document.getElementById("ar-button2");
 
         {
             const supported = navigator.xr && navigator.xr.isSessionSupported("immersive-ar");
