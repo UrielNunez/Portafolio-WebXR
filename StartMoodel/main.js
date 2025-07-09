@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gltf.scene.position.set(0, -1, 0);
             scene.add(gltf.scene);
             //animation
-            const mixer = new THREE.AnimationMixer(gltf.scene);
+            mixer = new THREE.AnimationMixer(gltf.scene);
             if (gltf.animations && gltf.animations.length > 0) {
                 const action = mixer.clipAction(gltf.animations[0]);
                 action.play();
