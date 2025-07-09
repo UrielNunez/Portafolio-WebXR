@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const arButton = document.getElementById("ar-button");
         const avisoStart = document.getElementById("webar-notice");
         const avisoIOS = document.getElementById("button");
-        //const arButton2 = document.getElementById("ar-button2");
+        const arButton2 = document.getElementById("ar-button2");
 
         {
             const supported = navigator.xr && navigator.xr.isSessionSupported("immersive-ar");
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderer.xr.setReferenceSpaceType('local');
                 await renderer.xr.setSession(currentSession);
 
-                //arButton2.textContent = "End";
+                arButton2.textContent = "End";
 
                 renderer.setAnimationLoop(() => {
                     const delta = clock.getDelta();
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderer.clear();
                 renderer.setAnimationLoop(null);
 
-                //arButton2.style.display = "none";
+                arButton2.style.display = "none";
             }
             arButton.addEventListener("click", () => {
                 if (currentSession) {
@@ -85,14 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     start();
                 }
             });
-            /*
             arButton2.addEventListener("click", () => {
                 if (currentSession) {
                     end();
                 } else {
                     start();
                 }
-            });*/
+            });
         }
 
     }
