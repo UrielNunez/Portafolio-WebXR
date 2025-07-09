@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderer.setAnimationLoop(null);
 
                 arButton2.style.display = "none";
+                window.location.href = "../index.html"
             }
             arButton.addEventListener("click", () => {
                 if (currentSession) {
