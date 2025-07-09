@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
         scene.add(light);
 
+        // Clock y mixer para animación
+        const clock = new THREE.Clock();
+        let mixer = null;
         //Modelo 3D creado
         {
             //3d mdoel
@@ -56,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 arButton.textContent = "End";
 
                 renderer.setAnimationLoop(() => {
+                    const delta = clock.getDelta();
+                    if (mixer) mixer.update(delta);
                     renderer.render(scene, camera);
                 });
             }
