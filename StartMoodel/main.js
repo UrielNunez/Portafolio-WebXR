@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Modelo 3D creado
         {
 
-            const gltf = await loadGLTF("./Assets/Modelo.glb");
+            const gltf = await loadGLTF("../Assets/Modelo.glb");
             gltf.scene.scale.set(1, 1, 1);
             gltf.scene.position.set(0, -1, 0);
             scene.add(gltf.scene);
