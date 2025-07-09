@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const avisoIOS = document.getElementById("button");
         const arButton2 = document.getElementById("ar-button2");
 
+        if (arButton2) arButton2.style.display = "none";
         {
             const supported = navigator.xr && navigator.xr.isSessionSupported("immersive-ar");
             if (!supported) {
@@ -58,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (avisoStart) avisoStart.style.display = "none";
                 if (avisoIOS) avisoIOS.style.display = "none";
+
+                if (arButton2) arButton2.style.display = "block";
 
                 renderer.xr.enabled = true;
                 renderer.xr.setReferenceSpaceType('local');
