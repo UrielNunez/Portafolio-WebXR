@@ -44,10 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             const controller = renderer.xr.getController(0);
             scene.add(controller);
-            controller.addEventListener("select", () => {
-                const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
+            controller.addEventListener("select", async () => {
+                const gltf = await loadGLTF("../Assets/Modelo.glb");
+                gltf.scene.scale.set(0.3, 0.3, 0.3);
                 const material = new THREE.MeshBasicMaterial({ color: 0xffbff * Math.random() });
-                const mesh = new THREE.Mesh(geometry, material);
+                const mesh = new THREE.Mesh(gltf, material);
                 mesh.position.setFromMatrixPosition(reticle.matrix);
                 mesh.scale.y = Math.random() * 2 + 1;
                 scene.add(mesh);
