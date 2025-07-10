@@ -49,11 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
             controller.addEventListener("select", async () => {
                 const gltf = await loadGLTF("../Assets/Modelo.glb");
                 gltf.scene.scale.set(0.3, 0.3, 0.3);
-                const material = new THREE.MeshBasicMaterial({ color: 0xffbff * Math.random() });
-                const mesh = new THREE.Mesh(gltf, material);
-                mesh.position.setFromMatrixPosition(reticle.matrix);
-                mesh.scale.y = Math.random() * 2 + 1;
-                scene.add(mesh);
+                gltf.position.setFromMatrixPosition(reticle.matrix);
+                gltf.scale.y = Math.random() * 2 + 1;
+                scene.add(gltf.scene);
 
                 //animation
                 mixer = new THREE.AnimationMixer(gltf.scene);
@@ -82,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     reticle.visible = false;
                 }
-                
+
                 const delta = clock.getDelta();
                 if (mixer) mixer.update(delta);
                 renderer.render(scene, camera);
