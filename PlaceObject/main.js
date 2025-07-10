@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             controller.addEventListener("select", async () => {
                 //3d mdoel
                 const gltf = await loadGLTF("../Assets/Modelo.glb");
-                gltf.scene.scale.set(0.5, 0.5, 0.5);
+                gltf.scene.scale.set(0.3, 0.3, 0.3);
 
                 //Para poner la posicion un poco alejada de la posicion virtuald el telefono (mejor opcion)
                 //se obtiene la posicion virtual del telefono
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const direction = new THREE.Vector3(0, 0, -1);
                 direction.applyQuaternion(controller.quaternion);
                 //se mueve el cubo 0.3 metros hacia adelante para que no aparezca tan cerca de la posicion del telfono 
-                position.add(direction.multiplyScalar(0.3));
+                position.add(direction.multiplyScalar(0.4));
                 position.y -= 0.3;
                 gltf.scene.position.copy(position);
 
