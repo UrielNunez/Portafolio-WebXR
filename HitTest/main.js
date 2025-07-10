@@ -48,10 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
             scene.add(controller);
             controller.addEventListener("select", async () => {
                 const gltf = await loadGLTF("../Assets/Modelo.glb");
-                gltf.scene.scale.set(0.3, 0.3, 0.3);
+                gltf.scene.scale.set(0.2, 0.2, 0.2);
 
                 gltf.scene.position.setFromMatrixPosition(reticle.matrix);
-                gltf.scene.scale.y = Math.random() * 2 + 1;
                 scene.add(gltf.scene);
 
                 //animation
