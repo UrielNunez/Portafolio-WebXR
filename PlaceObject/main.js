@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 direction.applyQuaternion(controller.quaternion);
                 //se mueve el cubo 0.3 metros hacia adelante para que no aparezca tan cerca de la posicion del telfono 
                 position.add(direction.multiplyScalar(0.3));
-                gltf.position.copy(position);
+                gltf.scene.position.copy(position);
 
-                gltf.quaternion.setFromRotationMatrix(controller.matrixWorld);
+                gltf.scene.quaternion.setFromRotationMatrix(controller.matrixWorld);
                 scene.add(gltf.scene);
                 //animation
                 mixer = new THREE.AnimationMixer(gltf.scene);
