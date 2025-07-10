@@ -31,15 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
         scene.add(light);
 
+        // Clock y mixer para animación
+        const clock = new THREE.Clock();
+        let mixer = null;
         //EVENTOS DE SELECCION DE PANTALLA
         {
             const controller = renderer.xr.getController(0);
             scene.add(controller);
 
-            controller.addEventListener("select", () => {
-                const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
-                const material = new THREE.MeshBasicMaterial({ color: 0xffbff * Math.random() });
-                const mesh = new THREE.Mesh(geometry, material);
+            controller.addEventListener("select", async () => {
+                //3d mdoel
+                const gltf = await loadGLTF("../Assets/Modelo.glb");
+                gltf.scene.scale.set(1, 1, 1);
 
                 //Para poner la posicion un poco alejada de la posicion virtuald el telefono (mejor opcion)
                 //se obtiene la posicion virtual del telefono
@@ -51,10 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 direction.applyQuaternion(controller.quaternion);
                 //se mueve el cubo 0.3 metros hacia adelante para que no aparezca tan cerca de la posicion del telfono 
                 position.add(direction.multiplyScalar(0.3));
-                mesh.position.copy(position);
+                gltf.position.copy(position);
 
-                mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
-                scene.add(mesh);
+                gltf.quaternion.setFromRotationMatrix(controller.matrixWorld);
+                scene.add(gltf.scene);
+                //animation
+                mixer = new THREE.AnimationMixer(gltf.scene);
+                if (gltf.animations && gltf.animations.length > 0) {
+                    const action = mixer.clipAction(gltf.animations[0]);
+                    action.play();
+                }
             });
         }
 
@@ -77,6 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 arButton2.textContent = "End";
 
                 renderer.setAnimationLoop(() => {
+                    const delta = clock.getDelta();
+                    if (mixer) mixer.update(delta);
                     renderer.render(scene, camera);
                 });
             }
