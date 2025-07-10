@@ -41,24 +41,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Clock y mixer para animación
         const clock = new THREE.Clock();
-        let mixer = null;
+        const mixers = [];
         //EVENTOS DE SELECCION DE PANTALLA
         {
             const controller = renderer.xr.getController(0);
             scene.add(controller);
             controller.addEventListener("select", async () => {
                 const gltf = await loadGLTF("../Assets/Modelo.glb");
-                gltf.scene.scale.set(0.2, 0.2, 0.2);
+                gltf.scene.scale.set(0.25, 0.25, 0.25);
 
                 gltf.scene.position.setFromMatrixPosition(reticle.matrix);
                 scene.add(gltf.scene);
 
                 //animation
-                mixer = new THREE.AnimationMixer(gltf.scene);
+                // Crear y guardar mixer
+                const mixer = new THREE.AnimationMixer(gltf.scene); // ✅ variable local
                 if (gltf.animations && gltf.animations.length > 0) {
                     const action = mixer.clipAction(gltf.animations[0]);
                     action.play();
                 }
+                mixers.push(mixer); // ✅ lo agregamos al array
 
             });
         }
@@ -82,7 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const delta = clock.getDelta();
-                if (mixer) mixer.update(delta);
+                // ✅ actualiza todas las animaciones activas
+                for (const mixer of mixers) {
+                    mixer.update(delta);
+                }
                 renderer.render(scene, camera);
             });
         });
