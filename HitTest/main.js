@@ -39,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
         scene.add(reticle);
 
 
-
+        // Clock y mixer para animación
+        const clock = new THREE.Clock();
+        let mixer = null;
         //EVENTOS DE SELECCION DE PANTALLA
         {
             const controller = renderer.xr.getController(0);
@@ -52,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 mesh.position.setFromMatrixPosition(reticle.matrix);
                 mesh.scale.y = Math.random() * 2 + 1;
                 scene.add(mesh);
+
+                //animation
+                mixer = new THREE.AnimationMixer(gltf.scene);
+                if (gltf.animations && gltf.animations.length > 0) {
+                    const action = mixer.clipAction(gltf.animations[0]);
+                    action.play();
+                }
 
             });
         }
@@ -73,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     reticle.visible = false;
                 }
+                
+                const delta = clock.getDelta();
+                if (mixer) mixer.update(delta);
                 renderer.render(scene, camera);
             });
         });
